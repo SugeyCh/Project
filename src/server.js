@@ -1,10 +1,12 @@
+require('dotenv').config()
+
 require('./controllers/connect.js')()
 const connection = conn()
 
 const express = require('express')  
 const app     = express() 
 const port    = process.env.PORT
-const url     = procces.env.URL
+const url     = process.env.URL
 const parser  = require('body-parser')
 const ejs     = require('ejs')
 const path    = require('path')

@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = function(){
   this.conn    = function(){
 		const mysql =require('mysql')
