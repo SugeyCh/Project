@@ -3,7 +3,8 @@ const connection = conn()
 
 const express = require('express')  
 const app     = express() 
-const port    = 4000
+const port    = process.env.PORT
+const url     = procces.env.URL
 const parser  = require('body-parser')
 const ejs     = require('ejs')
 const path    = require('path')
@@ -19,19 +20,19 @@ app.use(express.static('views'))
 
 app.listen(port, function() {
 	connection.connect(function(){
-		console.log(`Server running on http://localhost:${port}`)	
+		console.log(`Server running on ${url+port}`)	
 	})
 })
 
-app.get('/', (req,res) => {
+app.get(process.env.ROOT_PATH, (req,res) => {
 	res.render("register")
 })
 
-app.get('/login', (req,res) => {
+app.get(process.env.LOGIN, (req,res) => {
 	res.render("login")
 })
 
-app.get('/home', (req,res) => {
+app.get(process.env.HOME, (req,res) => {
 	res.render("principal")
 })
 
