@@ -34,7 +34,7 @@ app.get(process.env.LOGIN, (req,res) => {
 	res.render("login")
 })
 
-app.get(process.env.HOME, (req,res) => {
+app.get(process.env.HOME_PATH, (req,res) => {
 	res.render("principal")
 })
 

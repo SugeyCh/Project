@@ -109,6 +109,100 @@ header nav a.activo{
 	margin-right: 1.25em;
 }
 
+.titulo-p{
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+}
+
+.titulo-p h3{
+	color: #fff;
+	font-size: 30px;
+}
+
+.titulo-p .indicadores button{
+	background: #fff;
+	height: 3px;
+	width: 10px;
+	cursor: pointer;
+	border: none;
+	margin-right: 2px;
+}
+
+.titulo-p .indicadores button:hover,
+.titulo-p .indicadores button.activo{
+	background: red;
+}
+
+.populares{
+	margin-bottom: 70px;
+}
+
+.populares .container-prin{
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+.populares .container-prin .flecha-iz,
+.populares .container-prin .flecha-de{
+	position: absolute;
+	border: none;
+	background: rgba(0, 0, 0, 0.3);
+	font-size: 40px;
+	height: 50%;
+	top: calc(50% - 25%);
+	line-height: 40px;
+	width: 50px;
+	color: #fff;
+	cursor: pointer;
+	z-index: 500;
+	transition: .2s ease all;
+}
+
+.populares .container-prin .flecha-iz:hover,
+.populares .container-prin .flecha-de:hover{
+	background: rgba(0, 0, 0, .8);
+}
+
+.populares .container-prin .flecha-iz{
+	left: 0;
+}
+
+.populares .container-prin .flecha-de{
+	right: 0;
+}
+
+.populares .container-carousel{
+	width: 100%;
+	padding: 20px 0;
+	overflow: hidden;
+	scroll-behavior: smooth;
+} 
+
+.populares .container-carousel .carousel{
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.populares .container-carousel .carousel .peli{
+	min-width: 20%;
+	transition: .3s ease all;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
+}
+
+.populares .container-carousel .carousel .peli.hover{
+	transform: scale(1.2);
+	transform-origin: center;
+}
+
+.populares .container-carousel .carousel .peli img{
+	width: 100%;
+	vertical-align: top;
+}
+
+
+
 @media screen and (max-width: 800px){
 	header .logo{
 		margin-bottom: 10px;
@@ -126,5 +220,21 @@ header nav a.activo{
 
 	.cine .contenido{
 		max-width: 100%;
+	}
+
+	.populares .container-carousel{
+		overflow: visible;
+	}
+
+	.populares .container-carousel .carousel{
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 20px;
+	}
+
+	.populares .indicadores,
+	.populares  .flecha-iz,
+	.populares  .flecha-de{
+		display: none;
 	}
 }
