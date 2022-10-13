@@ -38,6 +38,14 @@ app.get(process.env.HOME_PATH, (req,res) => {
 	res.render("principal")
 })
 
+app.get('/film', (req,res) => {
+	res.render("peliculas")
+})
+
+app.get('/perfil', (req,res) => {
+	res.render("profile")
+})
+
 app.post('/register/pro', (req,res) => {
 	const { name, email, password } = req.body
 	bcrypt.hash(password, 10, (err,hash) => {
@@ -77,3 +85,4 @@ app.post('/login/pro', (req,res) => {
 	})	
 	console.log('Bienvenido')
 })
+

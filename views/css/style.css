@@ -68,6 +68,12 @@ header nav a.activo{
 	align-items: end;
 }
 
+.cine1{
+	font-size: 16px;
+	min-width: 40.62em;
+	color: #fff;
+}
+
 .cine .container{
 	margin: 0 auto;
 	margin-bottom: 6.253em;
@@ -200,6 +206,11 @@ header nav a.activo{
 	width: 100%;
 	vertical-align: top;
 }
+
+.container .btn-user i{
+	color: #fff;
+}
+
 
 
 

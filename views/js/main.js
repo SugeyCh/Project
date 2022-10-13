@@ -1,4 +1,4 @@
-const fila = document.querySelector('.container-carousel')
+const fila  = document.querySelector('.container-carousel')
 const pelis = document.querySelectorAll('.peli')
 
 const flechaiz = document.getElementById('flecha-iz')
