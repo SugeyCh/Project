@@ -24,28 +24,43 @@
 		</header>
 
 		<main>
-			<div class="container">
-				<a href="" class="btn-user" style="text-decoration:none"><i class='bx bx-plus-circle bx-sm'></i></a>
+			<div class="populares container">
+				<div class="titulo-p">
+					<h3>Acción</h3>
+				</div>
 
-				<table>
+			<div class="container">
+
+				<table class="content-table">
 					<thead>
-						<tr class="text-white">
+						<tr>
+							<th scope="col">#</th>
 							<th scope="col">Nombre</th>
-							<th scope="col">Correo</th>
-							<th></th>
+							<th scope="col">Genero</th>
+							<th scope="col">Fecha</th>
+							<th scope="col">Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Nombre</td>
-							<td>Correo</td>
-							<td>Acciones</td>
+						<% prom.forEach((user) => { %> 
+						<tr class="text-white">
+							<td><%= user.id %> </td>
+							<td> <%= user.nombre %></td>
+							<td><%= user.genero %></td>
+							<td><%= user.fecha_lanzamiento %></td>
 							<td>
-								<a href="/edit" class="btn btn-outline-info"></a>
-								<a href="/delete" class="btn btn-outline-info"></a>
+								<a href="/edit/<%= user.id %>" style="text-decoration:none"><i class='bx bxs-edit bx-xs'></i></a>
+								<a href="/delete" style="text-decoration:none"><i class='bx bx-trash bx-xs'></i></a>
+							</td>
+						</tr>
+						<% }) %> 
+						<tr>
+							<td>
+								<button type="submit" class="btn-us"><a href="/create" style="text-decoration:none">Nuevo</a></button>
 							</td>
 						</tr>
 					</tbody>
+					
 				</table>
 			</div>
 		</main>

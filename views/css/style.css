@@ -207,8 +207,64 @@ header nav a.activo{
 	vertical-align: top;
 }
 
-.container .btn-user i{
+.container .content-table{
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	font-size: 0.9em;
+	min-width: 1000px;
+	border-radius: 5px 5px 0 0;
+	overflow: hidden;
+	box-shadow: 0 0 15px #545454;
+}
+
+.container .content-table thead tr{
+	background-color: #8c1c13;
+	color: rgba(20, 20, 20, 0.938);
+	text-align: center;
+	font-weight: bold;
+}
+
+.container .content-table thead{
+	font-size: 18px;
+	font-family: dos;
+}
+
+.container .content-table td{
+	padding: 12px 15px;
+}
+
+.container .content-table tbody tr{
+	border-bottom: 1px solid #dddddd;
+}
+
+.container .content-table tbody tr:last-of-type{
+	border-bottom: 2px solid #000;
+}
+
+.container .content-table td i{
 	color: #fff;
+}
+
+.container .content-table .btn-us{
+	background: #8c1c13;
+	border: none;
+	border-radius: 0.31em;
+	padding: 0.4em 1.8em;
+	margin-right: 1.25em;
+	cursor: pointer;
+	transition: .3s ease all;
+	font-size: 1.12em;
+	margin: auto;
+}
+
+.container .content-table .btn-us a{
+	color: #000;
+}
+
+.container form .mb-3 input{
+	border: #545454;
 }
 
 
@@ -248,4 +304,9 @@ header nav a.activo{
 	.populares  .flecha-de{
 		display: none;
 	}
+
+	.container .content-table{
+		min-width: 500px;
+	}
+
 }

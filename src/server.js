@@ -42,8 +42,31 @@ app.get('/film', (req,res) => {
 	res.render("peliculas")
 })
 
-app.get('/perfil', (req,res) => {
-	res.render("profile")
+app.get('/perfil', async (req,res) => {
+	var sql  = `SELECT * FROM film`
+	var prom = await new Promise((resolve, reject) => {
+		connection.query(sql, (err,data,fields) => {
+		if(err) return reject(err)
+		return resolve(data)
+		})
+	})
+	res.render('profile', {prom})
+})
+
+app.get('/edit/:id', async (req,res) => {
+	const{ id } = req.params
+	sql = `SELECT * FROM film WHERE id='${id}';`
+	var prom = await new Promise((resolve, reject) => {
+		connection.query(sql, (err,data,fields) => {
+		if(err) return reject(err)
+		return resolve(data)
+		})
+	})
+	res.render('edit', {user:prom[0]})
+})
+
+app.get('/create', (req,res) => {	
+	res.render('create')
 })
 
 app.post('/register/pro', (req,res) => {
@@ -86,3 +109,20 @@ app.post('/login/pro', (req,res) => {
 	console.log('Bienvenido')
 })
 
+app.post('/save', (req,res) => {
+	const{ nombre, genero, fecha } = req.body
+	sql = `INSERT INTO film (nombre, genero, fecha_lanzamiento) VALUES ('${nombre}', '${genero}', '${fecha}');`
+	connection.query(sql, (err,data,fields) => {
+		if (err) throw err
+		res.redirect('/perfil')
+	})
+})
+
+app.post('/update', (req,res) => {
+	const{ nombre, genero, fecha } = req.body
+	sql = `UPDATE film SET nombre='${nombre}', genero='${genero}', fecha_lanzamiento='${fecha}' WHERE 1;`
+	connection.query(sql, (err,data,fields) => {
+		if (err) throw err
+		res.redirect('/perfil')
+	})
+})

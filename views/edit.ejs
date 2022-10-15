@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<style>
+		@import url('./css/style.css');
+	</style>
+</head>
+<body>
+    <header>
+			<div class="container">
+				<h2 class="logo">STELLE DELLA FILM</h2>
+
+				<nav>
+					<a href="/home" >Inicio</a>
+					<a href="/film">Peliculas</a>
+					<a href="#">Mas Recientes</a>
+					<a href="#" class="activo">Perfil</a>
+			</nav>
+	</div>
+		</header>
+
+		<main>
+			<div class="populares container">
+				<div class="titulo-p">
+					<h3>Acción</h3>
+				</div>
+
+				<% if (user) {%> 
+			<div class="container text-black">
+                <div class="text-bg-dark mb-3">
+									<div class="card border-dark">
+										<div class="card-header text-bg-dark">Editar Registro</div>
+										<div class="card-body text-bg-dark">
+											<form action="/update" method="post">
+												<input type="hidden" name="id" id="id" value="<%= user.id %> ">
+												<div class="mb-3 border-white">
+													<label for="nombre" class="form-label">Nombre</label>
+													<input type="text" class="form-control text-bg-dark" style="border: none;" id="nom" name="nombre" tabindex="1" value="<%= user.nombre %> ">
+												</div>
+												<div class="text-bg-dark mb-3">
+													<label for="genero" class="form-label">Genero</label>
+													<input type="text" class="form-control text-bg-dark" style="border: none;" id="gen" name="genero" tabindex="1" value="<%= user.genero%> ">
+												</div>
+												<div class="text-bg-dark mb-3">
+													<label for="fecha" class="form-label">Fecha de estreno</label>
+													<input type="date" class="form-control text-bg-dark" style="border:none" id="fecha" name="fecha" tabindex="1" value="<%= user.fecha_lanzamiento%> ">
+												</div>
+												<button type="submit" class="btn-us">Guardar</button>
+												<button type="button"><a href="/perfil" style="text-decoration:none">Cancelar</a></button>
+											</form>
+										</div>
+									</div>
+								</div>
+			</div>
+			<% } %> 
+		</main>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+</html>
