@@ -267,6 +267,44 @@ header nav a.activo{
 	border: #545454;
 }
 
+.populares .container-carousel .carousel .peli .con-text{
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+
+.peli{
+	position: relative;
+	display: inline-block;
+	background: linear-gradient(rgba(0, 0, 0, .50), rgba(0, 0, 0, .50));
+	
+}
+
+.peli .con-text{
+	position: absolute;
+	left: 10px;
+	color: #fff;
+	width: 100%;
+	
+}
+
+.peli .con-text p{
+	position: absolute;
+	
+	left: 50%;
+	transform: translate(-50%, -50%);
+	vertical-align: text-bottom; 
+}
+
+.peli .con-text h4{
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	vertical-align: text-bottom; 
+}
+
+
+
 
 
 

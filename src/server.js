@@ -14,6 +14,13 @@ const bcrypt  = require('bcrypt')
 const fetch   = require('node-fetch')
 const jwt     = require('jsonwebtoken')
 
+
+const admin =[{
+	nombre: 'Sugey',
+	correo: 'chaconsugey2003@gmail.com',
+	clave: 'S_Ch.15'
+}]
+
 app.use(parser.urlencoded({extended: true}))
 app.set('views', path.join(__dirname, '../views'))
 app.engine('ejs', ejs.__express)
@@ -39,7 +46,9 @@ app.get(process.env.HOME_PATH, (req,res) => {
 })
 
 app.get('/film', (req,res) => {
-	res.render("peliculas")
+	
+res.render("peliculas")
+
 })
 
 app.get('/perfil', async (req,res) => {
@@ -69,20 +78,34 @@ app.get('/create', (req,res) => {
 	res.render('create')
 })
 
+app.get('/error', (req, res) => {
+	res.render('error')
+})
+
 app.post('/register/pro', (req,res) => {
 	const { name, email, password } = req.body
-	bcrypt.hash(password, 10, (err,hash) => {
-		if (err) throw err
-		var sql = `INSERT INTO registro (nombre, correo, clave) VALUES ('${name}',
-		'${email}', '${hash}');`
-		connection.query(sql, (err,data,fields) => {
-			if (err) throw err
-			console.log('Registro Exitoso')
+	
+	const payload ={
+		nombre: name,
+		correo: email,
+		clave: password,
+		niv_acc: "Usuario"
+	}
+
+	jwt.sign(payload, process.env.KEY, {algorithm:"HS256"}, (err,token) => {
+		if (err) throw err 
+		bcrypt.hash(password, 10, (err,hash) => {
+			var sql = `INSERT INTO registro (nombre, correo, clave) VALUES ('${name}',
+			'${email}', '${hash}');`
+			connection.query(sql, (err,data,fields) => {
+				if (err) throw err
+				res.redirect('/login')
+			})
 		})
 	})
 })
 
-app.post('/login/pro', (req,res) => {
+app.post('/login/pro', async (req,res) => {
 	const{ correo, clave } = req.body
 	var sql = `SELECT * FROM registro WHERE correo='${correo}';`
 	connection.query(sql, (err,data,fields) => {
@@ -103,11 +126,12 @@ app.post('/login/pro', (req,res) => {
 		sql = `INSERT INTO login (correo, clave) VALUES ('${correo}', '${hash}');`
 		connection.query(sql, (err,data,fields) => {	
 			if(err) throw err
-			console.log('Exitoso Inicio')
-		})
-	})	
+			res.redirect('/home')	
+	})
+		})	
 	console.log('Bienvenido')
 })
+
 
 app.post('/save', (req,res) => {
 	const{ nombre, genero, fecha } = req.body
@@ -119,10 +143,20 @@ app.post('/save', (req,res) => {
 })
 
 app.post('/update', (req,res) => {
-	const{ nombre, genero, fecha } = req.body
-	sql = `UPDATE film SET nombre='${nombre}', genero='${genero}', fecha_lanzamiento='${fecha}' WHERE 1;`
+	const{ id, nombre, genero, fecha } = req.body
+	sql = `UPDATE film SET nombre='${nombre}', genero='${genero}', fecha_lanzamiento='${fecha}' WHERE id='${id}';`
 	connection.query(sql, (err,data,fields) => {
 		if (err) throw err
 		res.redirect('/perfil')
 	})
 })
+
+app.get('/delete/:id', (req,res) => {
+	const{ id } = req.params
+	sql = `DELETE FROM film WHERE id='${id}';`
+	connection.query(sql, (err,data,fields) => {
+		if (err) throw err
+	  res.redirect('/perfil')
+	})
+})
+

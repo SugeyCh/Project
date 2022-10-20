@@ -7,8 +7,180 @@
   <title>Perfil</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 	<style>
-		@import url('./css/style.css');
+		@font-face {
+	font-family: facil;
+	src: url(../Fonts/BebasNeue-Regular.ttf);
+}
+
+@font-face {
+	font-family: dos;
+	src: url(../Fonts/static/OpenSans_Condensed/OpenSans_Condensed-SemiBold.ttf);
+}
+
+:root{
+	--rojo: #e50914;
+	--fondo: #141414;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+	background: var(--fondo);
+	color: #fff;
+	
+	font-size: 18px;
+}
+
+main{
+	font-family: dos;
+	padding: 0 1.5em;
+}
+
+.content{
+	max-width: 1170px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1.5em;
+}
+
+.content .contact-wapper .contact-from h3{
+	text-align: center;
+	font-size: 3em;
+}
+
+.content .contact-wapper .contact-from h3 span{
+	color: #b70e21;
+}
+
+.contact-wapper{
+	box-shadow: 0 0 20px 0 rgba(255, 255, 255, .3);
+}
+
+.contact-wapper > *{
+	padding: 5em;
+}
+
+.contact-from{
+	background: #222222;
+}
+
+.contact-from form p{
+	margin: 0;
+	padding: 1em;
+}
+
+.contact-from form button,
+.contact-from form input{
+	width: 100%;
+	padding: .7em;
+	border: none;
+	background: none;
+	border-bottom: 1px solid #d63031;
+	color: #fff;
+}
+
+.cine .btn-us{
+	background: linear-gradient(rgba(0, 0, 0, .50), rgba(96, 94, 94, 0.461));
+	border: none;
+	border-radius: 0.31em;
+	padding: 0.93em 1.87em;
+	color: #fff;
+	margin-right: 1.25em;
+	cursor: pointer;
+	transition: .3s ease all;
+	font-size: 1.12em;
+	margin-bottom: 3.12em;
+	display: flex;
+	float: left;
+	width: 130px
+}
+
+.cine .btn-us:hover{
+	background: linear-gradient(rgba(220, 3, 3, 0.881), rgba(150, 10, 10, 0.67))0;
+	color: #fff;
+}
+
+.cine .btn-us a{
+	color: #fff;
+}
+
+.cine .btn-us a:hover{
+	color: #fff;
+}
+
+.container{
+	width: 90%;
+	margin: auto;
+}
+
+header{
+	padding: 30px 0;
+}
+
+header .container{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+header .logo{
+	font-family: facil;
+	font-weight: normal;
+	color: var(--rojo);
+	font-size: 40px;
+}
+
+header nav a{
+	color: #aaa;
+	text-decoration: none;
+	margin-right: 20px;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+header nav a:hover,
+header nav a.activo{
+	color: #fff;
+}
+
+.titulo-p h3{
+	color: #fff;
+	font-size: 30px;
+}
+
+.cine .container{
+	margin: 0 auto;
+	margin-bottom: 6.253em;
+}
+
+.cine .titulo{
+	font-family: dos;
+	font-weight: 600;
+	font-size: 3.12em;
+	margin-bottom: 0.4em;
+}
+
+@media screen and (max-width: 800px){
+	header .logo{
+		margin-bottom: 10px;
+		font-size: 30px;
+	}
+
+	header .container{
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.cine{
+		font-size: 14px;
+	}
+}
+
 	</style>
 </head>
 <body>
@@ -28,37 +200,38 @@
 		<main>
 			<div class="populares container">
 				<div class="titulo-p">
-					<h3>Acción</h3>
+			
 				</div>
-
+				<div class="cine">
 				<% if (user) {%> 
-			<div class="container text-black">
-                <div class="text-bg-dark mb-3">
-									<div class="card border-dark">
-										<div class="card-header text-bg-dark">Editar Registro</div>
-										<div class="card-body text-bg-dark">
-											<form action="/update" method="post">
-												<input type="hidden" name="id" id="id" value="<%= user.id %> ">
-												<div class="mb-3 border-white">
-													<label for="nombre" class="form-label">Nombre</label>
-													<input type="text" class="form-control text-bg-dark" style="border: none;" id="nom" name="nombre" tabindex="1" value="<%= user.nombre %> ">
-												</div>
-												<div class="text-bg-dark mb-3">
-													<label for="genero" class="form-label">Genero</label>
-													<input type="text" class="form-control text-bg-dark" style="border: none;" id="gen" name="genero" tabindex="1" value="<%= user.genero%> ">
-												</div>
-												<div class="text-bg-dark mb-3">
-													<label for="fecha" class="form-label">Fecha de estreno</label>
-													<input type="date" class="form-control text-bg-dark" style="border:none" id="fecha" name="fecha" tabindex="1" value="<%= user.fecha_lanzamiento%> ">
-												</div>
+					<div class="content">
+						<div class="contact-wapper">
+							<div class="contact-from">
+								<h3>Editar <span>Registro</span> </h3>
+								<form action="/update" method="post">
+									<input type="hidden" name="id" id="id" value="<%= user.id %> ">
+										<label for="nombre">Nombre</label>
+										  <p>
+												<input type="text" id="nom" name="nombre" tabindex="1" value="<%= user.nombre %> ">
+											</p>
+											<label for="genero">Género</label>
+											<p>
+													<input type="text" id="gen" name="genero" tabindex="1" value="<%= user.genero%> ">
+											</p>
+											<label for="fecha">Fecha de estreno</label>
+											<p>
+													<input type="date" id="fecha" name="fecha" tabindex="1" value="<%= user.fecha_lanzamiento%> ">
+											</p>
 												<button type="submit" class="btn-us">Guardar</button>
-												<button type="button"><a href="/perfil" style="text-decoration:none">Cancelar</a></button>
+												<button type="button" class="btn-us"><a href="/perfil" style="text-decoration:none">Cancelar</a></button>
 											</form>
 										</div>
 									</div>
 								</div>
-			</div>
 			<% } %> 
+		</div>
+			
+		</div>
 		</main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
