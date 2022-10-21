@@ -17,10 +17,15 @@
 		<div class="titulo-p">
 			<h3>Acción</h3>
 		</div>
-
+		<% if (user) {%> 
+			<input type="hidden" name="id" id="id" value="<%= user.id %> ">
+			<% } %> 
 		<div class="container-prin">
+
+			
 			<div class="container-carousel">
 				<div class="carousel">
+					
 					<div class="peli">
 						<a href="#"> <img src="./img/ac1.jpg" alt=""> </a>
 					</div>
@@ -39,6 +44,7 @@
 						</div>
 				</div>
 			</div>
+			
 		</div>
 
 
@@ -217,4 +223,6 @@
 		</main>		
 </body>
 <script src="./js/peli.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./js/so.js"></script>
 </html>

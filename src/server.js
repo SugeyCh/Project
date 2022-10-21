@@ -13,13 +13,14 @@ const path    = require('path')
 const bcrypt  = require('bcrypt')
 const fetch   = require('node-fetch')
 const jwt     = require('jsonwebtoken')
+const socket  = require('socket.io')
+const session = require('express-session')
 
-
-const admin =[{
-	nombre: 'Sugey',
-	correo: 'chaconsugey2003@gmail.com',
-	clave: 'S_Ch.15'
-}]
+app.use(session({
+	secret: process.env.KEY_SES,
+	resave: true,
+	saveUninitialized: true
+}))
 
 app.use(parser.urlencoded({extended: true}))
 app.set('views', path.join(__dirname, '../views'))
@@ -27,10 +28,15 @@ app.engine('ejs', ejs.__express)
 app.set('view engine', 'ejs')
 app.use(express.static('views'))
 
-app.listen(port, function() {
+const server = app.listen(port, function() {
 	connection.connect(function(){
 		console.log(`Server running on ${url+port}`)	
 	})
+})
+
+const io = socket(server)
+io.on('connection', (socket) => {
+	console.log('new connection', socket.id)
 })
 
 app.get(process.env.ROOT_PATH, (req,res) => {
@@ -42,13 +48,21 @@ app.get(process.env.LOGIN, (req,res) => {
 })
 
 app.get(process.env.HOME_PATH, (req,res) => {
-	res.render("principal")
+
+		res.render("principal")
+		
+	req.session.niv_acc = 'Usuario'
+	req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+	console.log(`La persona con rol ${req.session.niv_acc} ha visitado esta página ${req.session.visitas}`)
+
+	req.session.admin   = 'Sugey'
+	req.session.niv_acc = 'Admin'
+	req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+	console.log(`La persona ${req.session.admin} con rol ${req.session.niv_acc} ha visitado esta página ${req.session.visitas}`)
 })
 
-app.get('/film', (req,res) => {
-	
-res.render("peliculas")
-
+app.get('/film', (req,res) => {	
+	res.render("peliculas")
 })
 
 app.get('/perfil', async (req,res) => {
@@ -60,6 +74,11 @@ app.get('/perfil', async (req,res) => {
 		})
 	})
 	res.render('profile', {prom})
+
+	req.session.admin   = 'Sugey'
+	req.session.niv_acc = 'Admin'
+	req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+	console.log(`La persona ${req.session.admin} con rol ${req.session.niv_acc} ha visitado esta página ${req.session.visitas}`)
 })
 
 app.get('/edit/:id', async (req,res) => {
