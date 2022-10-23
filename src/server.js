@@ -15,11 +15,15 @@ const fetch   = require('node-fetch')
 const jwt     = require('jsonwebtoken')
 const socket  = require('socket.io')
 const session = require('express-session')
+const mysql   = require('express-mysql-session')
 
+const sessionStore = new mysql(connection)
 app.use(session({
+	key: 'cookie_usuario',
 	secret: process.env.KEY_SES,
-	resave: true,
-	saveUninitialized: true
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false
 }))
 
 app.use(parser.urlencoded({extended: true}))
@@ -78,7 +82,12 @@ app.get('/perfil', async (req,res) => {
 	req.session.admin   = 'Sugey'
 	req.session.niv_acc = 'Admin'
 	req.session.visitas = req.session.visitas ? ++req.session.visitas : 1
+	console.log(req.session)
 	console.log(`La persona ${req.session.admin} con rol ${req.session.niv_acc} ha visitado esta página ${req.session.visitas}`)
+})
+
+app.get('/series', (req,res) => {
+	res.render('series')
 })
 
 app.get('/edit/:id', async (req,res) => {

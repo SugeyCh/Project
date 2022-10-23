@@ -6,7 +6,7 @@
             <nav>
                 <a href="/home" >Inicio</a>
                 <a href="#" class="activo">Peliculas</a>
-                <a href="#">Mas Recientes</a>
+                <a href="/favorite">Favoritos</a>
                 <a href="/perfil">Perfil</a>
             </nav>
         </div>
@@ -17,9 +17,7 @@
 		<div class="titulo-p">
 			<h3>Acción</h3>
 		</div>
-		<% if (user) {%> 
-			<input type="hidden" name="id" id="id" value="<%= user.id %> ">
-			<% } %> 
+		
 		<div class="container-prin">
 
 			
