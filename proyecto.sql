@@ -11,6 +11,7 @@ CREATE TABLE registro(
 	correo VARCHAR(50) NOT NULL,
 	clave VARCHAR(100) NOT NULL,
 	niv_acc ENUM('0', '1', '2') DEFAULT '1',
+	token VARCHAR(255),
 	fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY(id),
 	CONSTRAINT UNIQUE(correo)
@@ -24,7 +25,6 @@ CREATE TABLE login(
 	token VARCHAR(255),
 	fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY(id),
-	CONSTRAINT UNIQUE(correo),
 	FOREIGN KEY(correo) REFERENCES registro(correo)
 );
 

@@ -4,10 +4,9 @@
 	box-sizing: border-box;
 }
 
-body {
+main {
 	font-family: 'Montserrat', sans-serif;
-	background: #e0e0e0;
-	color: #1d1d1d;
+	color: #ddd;
 }
 
 .contenedor {

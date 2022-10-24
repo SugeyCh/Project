@@ -71,7 +71,7 @@ app.get('/film', (req,res) => {
 
 app.get('/perfil', async (req,res) => {
 	var sql  = `SELECT * FROM film`
-	var prom = await new Promise((resolve, reject) => {
+	let prom = await new Promise((resolve, reject) => {
 		connection.query(sql, (err,data,fields) => {
 		if(err) return reject(err)
 		return resolve(data)
@@ -86,8 +86,8 @@ app.get('/perfil', async (req,res) => {
 	console.log(`La persona ${req.session.admin} con rol ${req.session.niv_acc} ha visitado esta página ${req.session.visitas}`)
 })
 
-app.get('/series', (req,res) => {
-	res.render('series')
+app.get('/api', (req,res) => {
+	res.render('./api/index.ejs')
 })
 
 app.get('/edit/:id', async (req,res) => {
@@ -120,11 +120,11 @@ app.post('/register/pro', (req,res) => {
 		niv_acc: "Usuario"
 	}
 
-	jwt.sign(payload, process.env.KEY, {algorithm:"HS256"}, (err,token) => {
+	jwt.sign(payload, process.env.KEY, {algorithm:"HS256", expiresIn: 86400}, (err,token) => {
 		if (err) throw err 
 		bcrypt.hash(password, 10, (err,hash) => {
-			var sql = `INSERT INTO registro (nombre, correo, clave) VALUES ('${name}',
-			'${email}', '${hash}');`
+			var sql = `INSERT INTO registro (nombre, correo, clave, token) VALUES ('${name}',
+			'${email}', '${hash}', '${token}');`
 			connection.query(sql, (err,data,fields) => {
 				if (err) throw err
 				res.redirect('/login')
@@ -136,29 +136,35 @@ app.post('/register/pro', (req,res) => {
 app.post('/login/pro', async (req,res) => {
 	const{ correo, clave } = req.body
 	var sql = `SELECT * FROM registro WHERE correo='${correo}';`
-	connection.query(sql, (err,data,fields) => {
-		if (err) throw err
-		if(data[0].correo=correo){
+
+	var Mypromise = await new Promise((resole,reject) => {
+		connection.query(sql, (err,data,fields) => {
 			bcrypt.compare(clave, data[0].clave, (err,comp) => {
-				if(err) throw err
-				if (comp==true) {
+				if(err) reject(err)
+				if (data[0].correo == correo && data[0].clave) {
 					console.log('Inicio de Sesión Exitoso')
-				} else {
-					console.log('Contraseña Incorrecta')
+				} else if(data[0].clave =! clave) { 
+					console.log('Contraseña incorrecta');
 				}
 			})
-		}
+		})
+		
+		if(Mypromise){
+		connection.query(sql, (err,data,fields) => {
+			jwt.verify(data[0].token, process.env.KEY, (err,decoded) => {
+				if(err){
+					res.redirect('/error')
+				}
+			  res.send(decoded)
+			})
+		})
+	}else{
+		console.log('Hay un problema')
+	}
+res.redirect('/home')
 	})
-	
-	bcrypt.hash(clave, 10, (err,hash) => {
-		sql = `INSERT INTO login (correo, clave) VALUES ('${correo}', '${hash}');`
-		connection.query(sql, (err,data,fields) => {	
-			if(err) throw err
-			res.redirect('/home')	
-	})
-		})	
-	console.log('Bienvenido')
 })
+
 
 
 app.post('/save', (req,res) => {
