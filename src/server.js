@@ -137,19 +137,23 @@ app.post('/login/pro', async (req,res) => {
 	const{ correo, clave } = req.body
 	var sql = `SELECT * FROM registro WHERE correo='${correo}';`
 
-	var Mypromise = await new Promise((resole,reject) => {
+	var Mypromise = await new Promise((resolve,reject) => {
+		return console.log(resolve)
 		connection.query(sql, (err,data,fields) => {
 			bcrypt.compare(clave, data[0].clave, (err,comp) => {
 				if(err) reject(err)
-				if (data[0].correo == correo && data[0].clave) {
-					console.log('Inicio de Sesión Exitoso')
-				} else if(data[0].clave =! clave) { 
-					console.log('Contraseña incorrecta');
-				}
+				return resolve(data)
 			})
 		})
 		
+		console.log(Mypromise)
 		if(Mypromise){
+			sql = `INSERT INTO login (correo, clave) VALUES ('${correo}', '${hash}');`
+			connection.query(sql, (err,data,fields) => {	
+				if(err) throw err
+				return resolve(data)
+			})
+	
 		connection.query(sql, (err,data,fields) => {
 			jwt.verify(data[0].token, process.env.KEY, (err,decoded) => {
 				if(err){
@@ -164,6 +168,8 @@ app.post('/login/pro', async (req,res) => {
 res.redirect('/home')
 	})
 })
+
+
 
 
 
@@ -193,4 +199,5 @@ app.get('/delete/:id', (req,res) => {
 	  res.redirect('/perfil')
 	})
 })
+
 
