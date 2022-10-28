@@ -134,44 +134,36 @@ app.post('/register/pro', (req,res) => {
 })
 
 app.post('/login/pro', async (req,res) => {
-	const{ correo, clave } = req.body
-	var sql = `SELECT * FROM registro WHERE correo='${correo}';`
+	const { correo, clave } = req.body
+    const sql  = `SELECT * FROM registro WHERE correo = "${correo}";`
 
-	var Mypromise = await new Promise((resolve,reject) => {
-		return console.log(resolve)
-		connection.query(sql, (err,data,fields) => {
-			bcrypt.compare(clave, data[0].clave, (err,comp) => {
-				if(err) reject(err)
-				return resolve(data)
-			})
-		})
+    var Mypromise = await new Promise((resolve,reject)=>{
+        connection.query(sql, (err,data,fields)=>{
+					bcrypt.compare(clave, data[0].clave, (err,comp) => {
+                if(err) reject(err)
+                resolve(comp)
+            })
+        })
+    })
+
 		
-		console.log(Mypromise)
-		if(Mypromise){
-			sql = `INSERT INTO login (correo, clave) VALUES ('${correo}', '${hash}');`
-			connection.query(sql, (err,data,fields) => {	
-				if(err) throw err
-				return resolve(data)
-			})
-	
-		connection.query(sql, (err,data,fields) => {
-			jwt.verify(data[0].token, process.env.KEY, (err,decoded) => {
-				if(err){
-					res.redirect('/error')
+    if(Mypromise){
+				const add = `INSERT INTO login (correo, clave) VALUES ('${correo}', '${clave}');`
+					connection.query(add, (err) => {
+						if (err) throw err
+					})
+
+					connection.query(sql, (err,data,fields) => {
+						jwt.verify(data[0].token, process.env.KEY, (err,decoded) => {
+							if(err) throw err
+							console.log(decoded)
+							res.redirect('/home')
+						})
+					})
+				}else{
+					console.log('Hay un problema')
 				}
-			  res.send(decoded)
-			})
-		})
-	}else{
-		console.log('Hay un problema')
-	}
-res.redirect('/home')
 	})
-})
-
-
-
-
 
 app.post('/save', (req,res) => {
 	const{ nombre, genero, fecha } = req.body
